@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./selectPlan.css";
+// import "./selectPlan.css";
 import { useDispatch, useSelector } from "react-redux";
 import { PriceOfPlan, ChooseDuration } from "../features/plan";
 import { changeStep2 } from "../features/step";
