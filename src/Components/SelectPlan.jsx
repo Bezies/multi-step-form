@@ -1,35 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./selectPlan.css";
-import NextPagesButton from "./NextPagesButton";
 import { useDispatch, useSelector } from "react-redux";
-import { PriceOfPlan } from "../features/plan";
+import { PriceOfPlan, ChooseDuration } from "../features/plan";
+import { changeStep2 } from "../features/step";
 
 export default function SelectPlan() {
   const [yearly, setYearly] = useState(false);
+  const dispatch = useDispatch();
+  const plan = useSelector((state) => state.plan);
+
+  console.log(plan);
 
   // CHOICE MONTH / YEAR
   function HandleChoose(e) {
     if (e.target.checked) {
-      setYearly(true);
+      dispatch(ChooseDuration(true));
     } else {
-      setYearly(false);
+      dispatch(ChooseDuration(false));
     }
   }
 
   // ADD PRICE
   const [PlanPrice, setPlanPrice] = useState("");
+  const [NameOfPlan, setNameOfPlan] = useState("");
 
   function handleSelectPlan(e) {
     if (e.target.checked) {
       setPlanPrice(e.target.value);
+      setNameOfPlan(e.target.id);
     }
   }
 
-  // SAVE PRICE
-  const dispatch = useDispatch();
-  const plan = useSelector((state) => state.plan);
+  // CHANGE PAGE
+  useEffect(() => {
+    if (plan.step2Validation) {
+      dispatch(changeStep2());
+    }
+  }, [plan.step2Validation]);
 
-  console.log(plan);
+  function handleTest(e) {
+    console.log(e);
+  }
 
   return (
     <div className="h-1/2 bg-blue-100">
@@ -44,14 +55,14 @@ export default function SelectPlan() {
             <input
               onChange={(e) => handleSelectPlan(e)}
               className="hidden"
-              id="radio_1"
+              id="Arcade"
               type="radio"
               name="radio"
-              value={yearly ? 90 : 9}
+              value={plan.yearly ? 90 : 9}
             />
             <label
-              className="flex flex-col p-4 border border-gray-400 cursor-pointer rounded"
-              htmlFor="radio_1"
+              className="flex flex-col p-4 border mt-3 border-gray-400 cursor-pointer rounded"
+              htmlFor="Arcade"
             >
               <div className="flex items-center ">
                 <img
@@ -64,9 +75,9 @@ export default function SelectPlan() {
                     Arcade
                   </span>
                   <ul className="text-sm">
-                    {!yearly && <li>$9/mo</li>}
-                    {yearly && <li>$90/yr</li>}
-                    {yearly && (
+                    {!plan.yearly && <li>$9/mo</li>}
+                    {plan.yearly && <li>$90/yr</li>}
+                    {plan.yearly && (
                       <li className="text-sm text-blue-800">2 months free</li>
                     )}
                   </ul>
@@ -79,14 +90,14 @@ export default function SelectPlan() {
             <input
               onChange={(e) => handleSelectPlan(e)}
               className="hidden"
-              id="radio_2"
+              id="Advanced"
               type="radio"
               name="radio"
-              value={yearly ? 120 : 12}
+              value={plan.yearly ? 120 : 12}
             />
             <label
               className="flex flex-col p-4 border mt-3 border-gray-400 cursor-pointer rounded"
-              htmlFor="radio_2"
+              htmlFor="Advanced"
             >
               <div className="flex items-center ">
                 <img
@@ -99,9 +110,9 @@ export default function SelectPlan() {
                     Advanced
                   </span>
                   <ul className="text-sm">
-                    {!yearly && <li>$12/mo</li>}
-                    {yearly && <li>$120/yr</li>}
-                    {yearly && (
+                    {!plan.yearly && <li>$12/mo</li>}
+                    {plan.yearly && <li>$120/yr</li>}
+                    {plan.yearly && (
                       <li className="text-sm text-blue-800">2 months free</li>
                     )}
                   </ul>
@@ -113,14 +124,14 @@ export default function SelectPlan() {
             <input
               onChange={(e) => handleSelectPlan(e)}
               className="hidden"
-              id="radio_3"
+              id="Pro"
               type="radio"
               name="radio"
-              value={yearly ? 150 : 15}
+              value={plan.yearly ? 150 : 15}
             />
             <label
               className="flex flex-col p-4 border border-gray-400 mt-3 cursor-pointer rounded"
-              htmlFor="radio_3"
+              htmlFor="Pro"
             >
               <div className="flex items-center ">
                 <img className="w-10" src="assets/images/icon-pro.svg" alt="" />
@@ -129,9 +140,9 @@ export default function SelectPlan() {
                     Pro
                   </span>
                   <ul className="text-sm">
-                    {!yearly && <li>$15/mo</li>}
-                    {yearly && <li>$150/yr</li>}
-                    {yearly && (
+                    {!plan.yearly && <li>$15/mo</li>}
+                    {plan.yearly && <li>$150/yr</li>}
+                    {plan.yearly && (
                       <li className="text-sm text-blue-800">2 months free</li>
                     )}
                   </ul>
@@ -145,7 +156,7 @@ export default function SelectPlan() {
         <div className="mt-5 py-3 flex justify-center items-center bg-blue-50 rounded-md">
           <span
             className={`${
-              yearly
+              plan.yearly
                 ? "font-semibold text-gray-400"
                 : "text-blue-800 font-semibold"
             }`}
@@ -163,7 +174,7 @@ export default function SelectPlan() {
           </label>
           <span
             className={`${
-              yearly
+              plan.yearly
                 ? "text-blue-800 font-semibold"
                 : "font-semibold text-gray-400"
             }`}
@@ -175,8 +186,14 @@ export default function SelectPlan() {
 
       <div className="w-10/12 flex items-center justify-between mx-auto px-3">
         <button className="font-bold text-gray-400">Go Back</button>
-        <button onClick={() => dispatch(PriceOfPlan(PlanPrice))}>Test</button>
-        <NextPagesButton />
+        <button
+          className="bg-blue-900 text-white rounded px-4 py-2"
+          onClick={() =>
+            dispatch(PriceOfPlan({ name: NameOfPlan, value: PlanPrice }))
+          }
+        >
+          Next page
+        </button>
       </div>
     </div>
   );

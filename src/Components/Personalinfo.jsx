@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NextPagesButton from "./NextPagesButton";
+import { changeStep } from "../features/step";
 
 export default function Personalinfo() {
   const personalValidation = useSelector((state) => state.personalValidation);
+  const step = useSelector((state) => state.step);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (personalValidation.step1Validation) {
+      dispatch(changeStep());
+    }
+  }, [personalValidation.step1Validation]);
 
   const [name, setName] = useState("");
   const [mail, setMail] = useState("");
