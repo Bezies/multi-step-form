@@ -39,7 +39,7 @@ export default function Finishing() {
               </p>
               <button
                 onClick={() => handleChange()}
-                className="text-gray-400 font-medium underline"
+                className="text-gray-400 font-medium underline hover:text-blue-900"
               >
                 Change
               </button>
