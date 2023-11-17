@@ -8,25 +8,29 @@ export default function Personalinfo() {
   const step = useSelector((state) => state.step);
   const dispatch = useDispatch();
 
+  // CHANGE PAGE
   useEffect(() => {
     if (personalValidation.step1Validation) {
-      dispatch(changeStep());
+      dispatch(changeStep({ actual: "step1", next: "step2" }));
     }
   }, [personalValidation.step1Validation]);
 
+  // STATE POUR VALIDATION NOM, MAIL, PHONE
   const [name, setName] = useState("");
   const [mail, setMail] = useState("");
   const [phone, setPhone] = useState("");
 
   return (
-    <>
-      <div className="h-1/2 bg-blue-100">
-        <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3">
-          <h1 className="text-2xl text-blue-800 font-bold">Personal info</h1>
-          <p className="text-gray-500 mt-3">
+    <div>
+      <div className="h-1/2 md:h-full md:w-full bg-blue-100 md:bg-white ml-20">
+        <div className="bg-white w-10/12 md:w-full rounded-md mx-auto py-5 px-3">
+          <h1 className="text-2xl text-blue-800 font-bold md:text-4xl">
+            Personal info
+          </h1>
+          <p className="text-gray-500 mt-3 md:text-xl">
             Please provide your name, email, address and phone number
           </p>
-          <form className="flex flex-col">
+          <form className="flex flex-col md:mt-8">
             <div className="flex justify-between items-center mt-4">
               <label className="text-blue-900" htmlFor="name">
                 Name
@@ -40,7 +44,11 @@ export default function Personalinfo() {
 
             <input
               onChange={(e) => setName(e.target.value)}
-              className="border border-gray-400 placeholder:text-sm placeholder:px-2 outline-violet-400 rounded py-2 px-2"
+              className={`${
+                personalValidation.name.error
+                  ? "border border-red-600 placeholder:text-sm placeholder:px-2 outline-none focus:border focus:border-violet-400 rounded py-2 px-2  text-blue-800 font-medium md:py-4 md:placeholder:text-lg md:placeholder:font-medium md:rounded-md"
+                  : "border border-gray-400 placeholder:text-sm placeholder:px-2 outline-none focus:border focus:border-violet-400 rounded py-2 px-2  text-blue-800 font-medium md:py-4 md:placeholder:text-lg md:placeholder:font-medium md:rounded-md"
+              }`}
               type="text"
               placeholder="e.g.Stephen King"
             />
@@ -62,7 +70,11 @@ export default function Personalinfo() {
             </div>
             <input
               onChange={(e) => setMail(e.target.value)}
-              className="border border-gray-400 placeholder:text-sm placeholder:px-2 outline-violet-400 rounded py-2 px-2"
+              className={`${
+                personalValidation.mail.error
+                  ? "border border-red-600 placeholder:text-sm placeholder:px-2 outline-none focus:border focus:border-violet-400 rounded py-2 px-2 text-blue-800 font-medium md:py-4 md:placeholder:text-lg md:placeholder:font-medium md:rounded-md"
+                  : "border border-gray-400 placeholder:text-sm placeholder:px-2 outline-none focus:border focus:border-violet-400 rounded py-2 px-2 text-blue-800 font-medium md:py-4 md:placeholder:text-lg md:placeholder:font-medium md:rounded-md"
+              }`}
               type="text"
               placeholder="e.g.stephenking@lorem.com"
             />
@@ -84,16 +96,20 @@ export default function Personalinfo() {
             </div>
             <input
               onChange={(e) => setPhone(e.target.value)}
-              className="border border-gray-400 placeholder:text-sm placeholder:px-2 outline-violet-400 rounded py-2 px-2"
+              className={`${
+                personalValidation.phone.error
+                  ? "border border-red-600 placeholder:text-sm placeholder:px-2 outline-none focus:border focus:border-violet-400 rounded py-2 px-2 text-blue-800 font-medium md:py-4 md:placeholder:text-lg md:placeholder:font-medium md:rounded-md"
+                  : "border border-gray-400 placeholder:text-sm placeholder:px-2 outline-none focus:border focus:border-violet-400 rounded py-2 px-2 text-blue-800 font-medium md:py-4 md:placeholder:text-lg md:placeholder:font-medium md:rounded-md"
+              }`}
               type="text"
               placeholder="e.g. +1 234 567 890"
             />
           </form>
         </div>
+        <div className="flex justify-end pr-3 md:w-full md:pr-3">
+          <NextPagesButton name={name} mail={mail} phone={phone} />
+        </div>
       </div>
-      <div className="flex justify-end pr-3">
-        <NextPagesButton name={name} mail={mail} phone={phone} />
-      </div>
-    </>
+    </div>
   );
 }

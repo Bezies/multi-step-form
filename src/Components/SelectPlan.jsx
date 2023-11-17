@@ -1,15 +1,38 @@
 import React, { useEffect, useState } from "react";
-// import "./selectPlan.css";
 import { useDispatch, useSelector } from "react-redux";
 import { PriceOfPlan, ChooseDuration } from "../features/plan";
-import { changeStep2 } from "../features/step";
+import { changeStep, previousStep } from "../features/step";
+import "./selectplan.css";
 
 export default function SelectPlan() {
   const [yearly, setYearly] = useState(false);
   const dispatch = useDispatch();
   const plan = useSelector((state) => state.plan);
+  const step = useSelector((state) => state.step);
 
-  console.log(plan);
+  const listOfPlan = [
+    {
+      id: 1,
+      name: "Arcade",
+      logo: "assets/images/icon-arcade.svg",
+      month: 9,
+      year: 90,
+    },
+    {
+      id: 2,
+      name: "Advanced",
+      logo: "assets/images/icon-advanced.svg",
+      month: 12,
+      year: 120,
+    },
+    {
+      id: 3,
+      name: "Pro",
+      logo: "assets/images/icon-pro.svg",
+      month: 15,
+      year: 150,
+    },
+  ];
 
   // CHOICE MONTH / YEAR
   function HandleChoose(e) {
@@ -31,129 +54,64 @@ export default function SelectPlan() {
     }
   }
 
-  // CHANGE PAGE
+  // NEXT PAGE
   useEffect(() => {
     if (plan.step2Validation) {
-      dispatch(changeStep2());
+      dispatch(changeStep({ actual: "step2", next: "step3" }));
     }
   }, [plan.step2Validation]);
 
-  function handleTest(e) {
-    console.log(e);
-  }
-
   return (
-    <div className="h-1/2 bg-blue-100">
-      <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3">
-        <h1 className="text-2xl text-blue-800 font-bold">Select your plan</h1>
-        <p className="text-gray-500 mt-3">
+    <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
+      <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3 md:flex md:flex-col md:justify-center md:w-1/2">
+        <h1 className="text-2xl text-blue-800 font-bold md:text-4xl">
+          Select your plan
+        </h1>
+        <p className="text-gray-500 mt-3 md:text-xl">
           You have the option of monthly or yearly billing
         </p>
 
-        <form className="mt-4">
-          <div>
-            <input
-              onChange={(e) => handleSelectPlan(e)}
-              className="hidden"
-              id="Arcade"
-              type="radio"
-              name="radio"
-              value={plan.yearly ? 90 : 9}
-            />
-            <label
-              className="flex flex-col p-4 border mt-3 border-gray-400 cursor-pointer rounded"
-              htmlFor="Arcade"
-            >
-              <div className="flex items-center ">
-                <img
-                  className="w-10"
-                  src="assets/images/icon-arcade.svg"
-                  alt=""
-                />
-                <div className="ml-3">
-                  <span className="font-semibold text-lg text-blue-800">
-                    Arcade
-                  </span>
-                  <ul className="text-sm">
-                    {!plan.yearly && <li>$9/mo</li>}
-                    {plan.yearly && <li>$90/yr</li>}
-                    {plan.yearly && (
-                      <li className="text-sm text-blue-800">2 months free</li>
-                    )}
-                  </ul>
+        <form className="mt-4 md:flex md:justify-between">
+          {listOfPlan.map((el) => (
+            <div key={el.id}>
+              <input
+                onChange={(e) => handleSelectPlan(e)}
+                className="hidden "
+                id={el.name}
+                type="radio"
+                name="radio"
+                value={plan.yearly ? el.year : el.month}
+              />
+              <label
+                className="flex flex-col p-4 border mt-3 border-gray-400 cursor-pointer rounded md:justify-start md:w-40 md:py-8"
+                htmlFor={el.name}
+              >
+                <div className="flex items-center md:flex-col md:items-start">
+                  <img
+                    className="w-10"
+                    src={el.logo}
+                    alt={`logo of ${el.name}`}
+                  />
+                  <div className="ml-3 md:ml-0 md:mt-8">
+                    <span className="font-semibold text-lg text-blue-800">
+                      {el.name}
+                    </span>
+                    <ul className="text-sm">
+                      {!plan.yearly && <li>${el.month}/mo</li>}
+                      {plan.yearly && <li>${el.year}/yr</li>}
+                      {plan.yearly && (
+                        <li className="text-sm text-blue-800">2 months free</li>
+                      )}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </label>
-          </div>
-
-          <div>
-            <input
-              onChange={(e) => handleSelectPlan(e)}
-              className="hidden"
-              id="Advanced"
-              type="radio"
-              name="radio"
-              value={plan.yearly ? 120 : 12}
-            />
-            <label
-              className="flex flex-col p-4 border mt-3 border-gray-400 cursor-pointer rounded"
-              htmlFor="Advanced"
-            >
-              <div className="flex items-center ">
-                <img
-                  className="w-10"
-                  src="assets/images/icon-advanced.svg"
-                  alt=""
-                />
-                <div className="ml-3">
-                  <span className="font-semibold text-lg text-blue-800">
-                    Advanced
-                  </span>
-                  <ul className="text-sm">
-                    {!plan.yearly && <li>$12/mo</li>}
-                    {plan.yearly && <li>$120/yr</li>}
-                    {plan.yearly && (
-                      <li className="text-sm text-blue-800">2 months free</li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <input
-              onChange={(e) => handleSelectPlan(e)}
-              className="hidden"
-              id="Pro"
-              type="radio"
-              name="radio"
-              value={plan.yearly ? 150 : 15}
-            />
-            <label
-              className="flex flex-col p-4 border border-gray-400 mt-3 cursor-pointer rounded"
-              htmlFor="Pro"
-            >
-              <div className="flex items-center ">
-                <img className="w-10" src="assets/images/icon-pro.svg" alt="" />
-                <div className="ml-3">
-                  <span className="font-semibold text-lg text-blue-800">
-                    Pro
-                  </span>
-                  <ul className="text-sm">
-                    {!plan.yearly && <li>$15/mo</li>}
-                    {plan.yearly && <li>$150/yr</li>}
-                    {plan.yearly && (
-                      <li className="text-sm text-blue-800">2 months free</li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            </label>
-          </div>
+              </label>
+            </div>
+          ))}
         </form>
 
         {/* TOGGLE BUTTON  */}
-        <div className="mt-5 py-3 flex justify-center items-center bg-blue-50 rounded-md">
+        <div className="mt-5 py-3 flex justify-center items-center bg-blue-50 rounded-md md:w-full">
           <span
             className={`${
               plan.yearly
@@ -184,8 +142,16 @@ export default function SelectPlan() {
         </div>
       </div>
 
-      <div className="w-10/12 flex items-center justify-between mx-auto px-3">
-        <button className="font-bold text-gray-400">Go Back</button>
+      {/*PREVIOUS NEXT / BUTTON  */}
+      <div className="w-10/12 flex items-center justify-between mx-auto px-3 md:w-1/2">
+        <button
+          onClick={() =>
+            dispatch(previousStep({ actual: "step2", previous: "step1" }))
+          }
+          className="font-bold text-gray-400"
+        >
+          Go Back
+        </button>
         <button
           className="bg-blue-900 text-white rounded px-4 py-2"
           onClick={() =>

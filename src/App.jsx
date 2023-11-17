@@ -12,16 +12,16 @@ export default function App() {
   const step = useSelector((state) => state.step);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen md:flex md:items-center">
       <Header />
 
-      {step.step1 && <Personalinfo />}
+      {step.steps[0].open && <Personalinfo />}
 
-      {step.step2 && <SelectPlan />}
+      {step.steps[1].open && <SelectPlan />}
 
-      {step.step3 && <PickAddons />}
+      {step.steps[2].open && <PickAddons />}
 
-      {step.step4 && <Finishing />}
+      {step.steps[3].open && <Finishing />}
 
       {step.finish && <ThankYou />}
     </div>

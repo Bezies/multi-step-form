@@ -15,7 +15,7 @@ const initialState = {
     error: false,
     invalid: false,
   },
-  step1Validation: false,
+  step1Validation: true,
 };
 
 export const personalValidation = createSlice({

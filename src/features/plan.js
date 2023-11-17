@@ -16,7 +16,9 @@ export const plan = createSlice({
     PriceOfPlan: (state, action) => {
       state.plan.name = action.payload.name;
       state.plan.value = action.payload.value;
-      state.step2Validation = true;
+      if (state.plan.name !== "") {
+        state.step2Validation = true;
+      }
     },
     ChooseDuration: (state, action) => {
       state.yearly = action.payload;
@@ -24,5 +26,5 @@ export const plan = createSlice({
   },
 });
 
-export const { PriceOfPlan, ChooseDuration } = plan.actions;
+export const { PriceOfPlan, ChooseDuration, UnvalidStep2 } = plan.actions;
 export default plan.reducer;
