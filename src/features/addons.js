@@ -15,8 +15,11 @@ export const addOns = createSlice({
       state.totalPrice = action.payload.total;
       state.AddOnsChoice = [...action.payload.addOnChoice];
     },
+    GoBackPickAddons: (state, action) => {
+      state.step3Validation = false;
+    },
   },
 });
 
-export const { totalPriceOfAddons } = addOns.actions;
+export const { totalPriceOfAddons, GoBackPickAddons } = addOns.actions;
 export default addOns.reducer;

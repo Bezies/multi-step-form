@@ -42,18 +42,20 @@ export default function Header() {
             <span
               className={`${
                 el.open
-                  ? "border-2 border-blue-900 rounded-full w-8 bg-blue-200 font-medium text-blue-900"
-                  : "border border-white rounded-full w-8"
+                  ? "border-2 border-blue-900 rounded-full w-8 bg-blue-200 font-medium text-blue-900 font-ubuntu text-sm py-1"
+                  : "border border-white rounded-full w-8 font-ubuntu text-sm py-1"
               }`}
             >
               {el.id}
             </span>
             {!mobile && (
               <div className="flex flex-col items-start ml-5">
-                <span className="uppercase text-blue-400 text-sm">
+                <span className="uppercase text-blue-400 text-sm font-ubuntu">
                   {el.step}
                 </span>
-                <span className="uppercase text-sm font-bold">{el.name}</span>
+                <span className="uppercase text-sm font-bold font-ubuntu">
+                  {el.name}
+                </span>
               </div>
             )}
           </div>

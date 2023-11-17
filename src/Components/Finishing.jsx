@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { finalStep } from "../features/step";
+import { finalStep, previousStep } from "../features/step";
+import { GoBackSelectPlan } from "../features/plan";
+import { GoBackPickAddons } from "../features/addons";
 
 export default function Finishing() {
   const plan = useSelector((state) => state.plan);
@@ -8,6 +10,17 @@ export default function Finishing() {
 
   const totalBill = parseInt(plan.plan.value) + addons.totalPrice;
   const dispatch = useDispatch();
+
+  function handlePrevious() {
+    dispatch(GoBackPickAddons());
+    dispatch(previousStep({ actual: "step4", previous: "step3" }));
+  }
+
+  function handleChange() {
+    dispatch(GoBackSelectPlan());
+    dispatch(GoBackPickAddons());
+    dispatch(previousStep({ actual: "step4", previous: "step2" }));
+  }
 
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
@@ -24,7 +37,10 @@ export default function Finishing() {
               <p className="text-blue-800 font-medium">
                 {plan.plan.name} {plan.yearly ? "(Yearly)" : "(Monthly)"}
               </p>
-              <button className="text-gray-400 font-medium underline">
+              <button
+                onClick={() => handleChange()}
+                className="text-gray-400 font-medium underline"
+              >
                 Change
               </button>
             </div>
@@ -62,7 +78,12 @@ export default function Finishing() {
         </div>
       </div>
       <div className="w-10/12 flex items-center justify-between mx-auto mt-20 px-3 md:w-1/2">
-        <button className="font-bold text-gray-400">Go Back</button>
+        <button
+          onClick={() => handlePrevious()}
+          className="font-bold text-gray-400"
+        >
+          Go Back
+        </button>
         <button
           onClick={() => dispatch(finalStep({ actual: "step4" }))}
           className="bg-blue-900 text-white rounded px-4 py-2"

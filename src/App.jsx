@@ -12,7 +12,7 @@ export default function App() {
   const step = useSelector((state) => state.step);
 
   return (
-    <div className="h-screen md:flex md:items-center">
+    <div className="h-screen md:flex md:items-center font-ubuntu">
       <Header />
 
       {step.steps[0].open && <Personalinfo />}

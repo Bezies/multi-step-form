@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PriceOfPlan, ChooseDuration } from "../features/plan";
+import { PriceOfPlan, ChooseDuration, PlanError } from "../features/plan";
 import { changeStep, previousStep } from "../features/step";
+import { GoBackPersonnalValidation } from "../features/personalValidation";
 import "./selectplan.css";
 
 export default function SelectPlan() {
@@ -9,6 +10,7 @@ export default function SelectPlan() {
   const dispatch = useDispatch();
   const plan = useSelector((state) => state.plan);
   const step = useSelector((state) => state.step);
+  const personalValidation = useSelector((state) => state.personalValidation);
 
   const listOfPlan = [
     {
@@ -61,6 +63,16 @@ export default function SelectPlan() {
     }
   }, [plan.step2Validation]);
 
+  function handlePrevious() {
+    dispatch(GoBackPersonnalValidation());
+    dispatch(previousStep({ actual: "step2", previous: "step1" }));
+  }
+
+  function handleNext({ name: NameOfPlan, value: PlanPrice }) {
+    dispatch(PlanError());
+    dispatch(PriceOfPlan({ name: NameOfPlan, value: PlanPrice }));
+  }
+
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
       <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3 md:flex md:flex-col md:justify-center md:w-1/2">
@@ -110,6 +122,14 @@ export default function SelectPlan() {
           ))}
         </form>
 
+        {plan.plan.error && (
+          <div className="mt-5 text-center">
+            <span className="font-semibold text-lg text-red-600">
+              Please select your plan before next step
+            </span>
+          </div>
+        )}
+
         {/* TOGGLE BUTTON  */}
         <div className="mt-5 py-3 flex justify-center items-center bg-blue-50 rounded-md md:w-full">
           <span
@@ -128,7 +148,7 @@ export default function SelectPlan() {
               value=""
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <div className="w-11 h-6 bg-gray-200 rounded-full peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-900"></div>
           </label>
           <span
             className={`${
@@ -145,18 +165,14 @@ export default function SelectPlan() {
       {/*PREVIOUS NEXT / BUTTON  */}
       <div className="w-10/12 flex items-center justify-between mx-auto px-3 md:w-1/2">
         <button
-          onClick={() =>
-            dispatch(previousStep({ actual: "step2", previous: "step1" }))
-          }
+          onClick={() => handlePrevious()}
           className="font-bold text-gray-400"
         >
           Go Back
         </button>
         <button
           className="bg-blue-900 text-white rounded px-4 py-2"
-          onClick={() =>
-            dispatch(PriceOfPlan({ name: NameOfPlan, value: PlanPrice }))
-          }
+          onClick={() => handleNext({ name: NameOfPlan, value: PlanPrice })}
         >
           Next page
         </button>

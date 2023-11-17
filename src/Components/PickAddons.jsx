@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { totalPriceOfAddons } from "../features/addons";
 import { useDispatch, useSelector } from "react-redux";
 import { changeStep, previousStep } from "../features/step";
+import { GoBackSelectPlan } from "../features/plan";
 
 export default function PickAddons() {
   const [addOnsTotal, setAddOnsTotal] = useState([]);
@@ -44,7 +45,10 @@ export default function PickAddons() {
     }
   }, [addons.step3Validation]);
 
-  console.log(step);
+  function handlePrevious() {
+    dispatch(GoBackSelectPlan());
+    dispatch(previousStep({ actual: "step3", previous: "step2" }));
+  }
 
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
@@ -138,9 +142,7 @@ export default function PickAddons() {
       </div>
       <div className="w-10/12 flex items-center justify-between mx-auto mt-20 px-3 md:w-1/2">
         <button
-          onClick={() =>
-            dispatch(previousStep({ actual: "step3", previous: "step2" }))
-          }
+          onClick={() => handlePrevious()}
           className="font-bold text-gray-400"
         >
           Go Back

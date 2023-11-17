@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import NextPagesButton from "./NextPagesButton";
 import { changeStep } from "../features/step";
+import {
+  Validation,
+  GoBackPersonnalValidation,
+} from "../features/personalValidation";
 
 export default function Personalinfo() {
   const personalValidation = useSelector((state) => state.personalValidation);
@@ -14,6 +17,11 @@ export default function Personalinfo() {
       dispatch(changeStep({ actual: "step1", next: "step2" }));
     }
   }, [personalValidation.step1Validation]);
+
+  function HandleNext() {
+    dispatch(GoBackPersonnalValidation());
+    dispatch(Validation({ name: name, mail: mail, phone: phone }));
+  }
 
   // STATE POUR VALIDATION NOM, MAIL, PHONE
   const [name, setName] = useState("");
@@ -43,6 +51,7 @@ export default function Personalinfo() {
             </div>
 
             <input
+              value={name}
               onChange={(e) => setName(e.target.value)}
               className={`${
                 personalValidation.name.error
@@ -69,6 +78,7 @@ export default function Personalinfo() {
               )}
             </div>
             <input
+              value={mail}
               onChange={(e) => setMail(e.target.value)}
               className={`${
                 personalValidation.mail.error
@@ -95,6 +105,7 @@ export default function Personalinfo() {
               )}
             </div>
             <input
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className={`${
                 personalValidation.phone.error
@@ -107,7 +118,13 @@ export default function Personalinfo() {
           </form>
         </div>
         <div className="flex justify-end pr-3 md:w-full md:pr-3">
-          <NextPagesButton name={name} mail={mail} phone={phone} />
+          {/* <NextPagesButton name={name} mail={mail} phone={phone} /> */}
+          <button
+            onClick={() => HandleNext({ name: name, mail: mail, phone: phone })}
+            className="bg-blue-900 text-white rounded px-4 py-2"
+          >
+            Next page
+          </button>
         </div>
       </div>
     </div>

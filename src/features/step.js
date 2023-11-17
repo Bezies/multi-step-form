@@ -23,8 +23,8 @@ export const step = createSlice({
       state.finish = true;
     },
     previousStep: (state, action) => {
-      state.steps.find((el) => el.step === action.payload.actual).open = false;
       state.steps.find((el) => el.step === action.payload.previous).open = true;
+      state.steps.find((el) => el.step === action.payload.actual).open = false;
     },
   },
 });

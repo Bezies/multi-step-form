@@ -15,7 +15,7 @@ const initialState = {
     error: false,
     invalid: false,
   },
-  step1Validation: true,
+  step1Validation: false,
 };
 
 export const personalValidation = createSlice({
@@ -66,8 +66,15 @@ export const personalValidation = createSlice({
         state.step1Validation = true;
       }
     },
+    GoBackPersonnalValidation: (state, action) => {
+      state.step1Validation = false;
+      state.name.validation = false;
+      state.mail.validation = false;
+      state.phone.validation = false;
+    },
   },
 });
 
-export const { Validation } = personalValidation.actions;
+export const { Validation, GoBackPersonnalValidation } =
+  personalValidation.actions;
 export default personalValidation.reducer;
