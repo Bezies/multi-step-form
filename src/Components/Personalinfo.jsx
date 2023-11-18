@@ -29,8 +29,8 @@ export default function Personalinfo() {
   const [phone, setPhone] = useState("");
 
   return (
-    <div>
-      <div className="h-1/2 md:h-full md:w-full bg-blue-100 md:bg-white ml-20">
+    <div className="h-1/2 bg-blue-100 md:h-full md:ml-52 md:w-1/2 md:bg-white md:mt-20">
+      <div>
         <div className="bg-white w-10/12 md:w-full rounded-md mx-auto py-5 px-3">
           <h1 className="text-2xl text-blue-800 font-bold md:text-4xl">
             Personal info
@@ -117,15 +117,15 @@ export default function Personalinfo() {
             />
           </form>
         </div>
-        <div className="flex justify-end pr-3 md:w-full md:pr-3">
-          {/* <NextPagesButton name={name} mail={mail} phone={phone} /> */}
-          <button
-            onClick={() => HandleNext({ name: name, mail: mail, phone: phone })}
-            className="bg-blue-900 text-white rounded px-4 py-2"
-          >
-            Next page
-          </button>
-        </div>
+      </div>
+      <div className="flex w-10/12 mx-auto justify-end pr-3 md:w-full md:pr-3 mt-16">
+        {/* <NextPagesButton name={name} mail={mail} phone={phone} /> */}
+        <button
+          onClick={() => HandleNext({ name: name, mail: mail, phone: phone })}
+          className="bg-blue-900 text-white rounded px-4 py-2"
+        >
+          Next page
+        </button>
       </div>
     </div>
   );
