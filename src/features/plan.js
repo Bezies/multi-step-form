@@ -1,6 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  listOfPlan: [
+    {
+      id: 1,
+      name: "Arcade",
+      logo: "assets/images/icon-arcade.svg",
+      month: 9,
+      year: 90,
+    },
+    {
+      id: 2,
+      name: "Advanced",
+      logo: "assets/images/icon-advanced.svg",
+      month: 12,
+      year: 120,
+    },
+    {
+      id: 3,
+      name: "Pro",
+      logo: "assets/images/icon-pro.svg",
+      month: 15,
+      year: 150,
+    },
+  ],
   plan: {
     name: "",
     value: "",
@@ -15,9 +38,15 @@ export const plan = createSlice({
   initialState,
   reducers: {
     PriceOfPlan: (state, action) => {
-      state.plan.name = action.payload.name;
-      state.plan.value = action.payload.value;
-      if (state.plan.name !== "") {
+      if (state.yearly) {
+        state.plan.value = state.listOfPlan.find(
+          (el) => el.name === action.payload
+        ).year;
+        state.step2Validation = true;
+      } else {
+        state.plan.value = state.listOfPlan.find(
+          (el) => el.name === action.payload
+        ).month;
         state.step2Validation = true;
       }
     },

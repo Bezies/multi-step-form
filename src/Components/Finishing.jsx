@@ -22,6 +22,8 @@ export default function Finishing() {
     dispatch(previousStep({ actual: "step4", previous: "step2" }));
   }
 
+  console.log(plan.plan.value);
+
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
       <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3 md:flex md:flex-col md:justify-center md:w-1/2">

@@ -12,30 +12,6 @@ export default function SelectPlan() {
   const step = useSelector((state) => state.step);
   const personalValidation = useSelector((state) => state.personalValidation);
 
-  const listOfPlan = [
-    {
-      id: 1,
-      name: "Arcade",
-      logo: "assets/images/icon-arcade.svg",
-      month: 9,
-      year: 90,
-    },
-    {
-      id: 2,
-      name: "Advanced",
-      logo: "assets/images/icon-advanced.svg",
-      month: 12,
-      year: 120,
-    },
-    {
-      id: 3,
-      name: "Pro",
-      logo: "assets/images/icon-pro.svg",
-      month: 15,
-      year: 150,
-    },
-  ];
-
   // CHOICE MONTH / YEAR
   function HandleChoose(e) {
     if (e.target.checked) {
@@ -49,9 +25,9 @@ export default function SelectPlan() {
   const [PlanPrice, setPlanPrice] = useState("");
   const [NameOfPlan, setNameOfPlan] = useState("");
 
+  // SELECTION DU PLAN POUR IDENTIFIER LE NOM
   function handleSelectPlan(e) {
     if (e.target.checked) {
-      setPlanPrice(e.target.value);
       setNameOfPlan(e.target.id);
     }
   }
@@ -68,10 +44,13 @@ export default function SelectPlan() {
     dispatch(previousStep({ actual: "step2", previous: "step1" }));
   }
 
-  function handleNext({ name: NameOfPlan, value: PlanPrice }) {
+  // BUTTON NEXT PAGE : GESTION DU PRIX DU PLAN + GESTION ERREUR
+  function handleNext() {
+    dispatch(PriceOfPlan(NameOfPlan));
     dispatch(PlanError());
-    dispatch(PriceOfPlan({ name: NameOfPlan, value: PlanPrice }));
   }
+
+  // console.log(PlanPrice);
 
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
@@ -84,7 +63,7 @@ export default function SelectPlan() {
         </p>
 
         <form className="mt-4 md:flex md:justify-between">
-          {listOfPlan.map((el) => (
+          {plan.listOfPlan.map((el) => (
             <div key={el.id}>
               <input
                 onChange={(e) => handleSelectPlan(e)}
