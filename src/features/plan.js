@@ -38,23 +38,20 @@ export const plan = createSlice({
   initialState,
   reducers: {
     PriceOfPlan: (state, action) => {
-      if (state.yearly) {
+      if (action.payload === "") {
+        state.plan.error = true;
+      } else if (state.yearly) {
         state.plan.value = state.listOfPlan.find(
           (el) => el.name === action.payload
         ).year;
+        state.plan.error = false;
         state.step2Validation = true;
       } else {
         state.plan.value = state.listOfPlan.find(
           (el) => el.name === action.payload
         ).month;
-        state.step2Validation = true;
-      }
-    },
-    PlanError: (state, action) => {
-      if (state.plan.name === "") {
-        state.plan.error = true;
-      } else {
         state.plan.error = false;
+        state.step2Validation = true;
       }
     },
     ChooseDuration: (state, action) => {

@@ -32,7 +32,7 @@ export default function Header() {
   }, [screenSize]);
 
   return (
-    <div className="bg-[url('./assets/bg-sidebar-mobile.svg')] flex items-start pt-5 justify-center md:bg-[url('./assets/bg-sidebar-desktop.svg')] h-1/5 md:bg-cover md:w-1/5 md:h-5/6 md:flex-col md:justify-start md:pl-10 md:rounded-lg md:ml-10">
+    <div className="bg-[url('./assets/bg-sidebar-mobile.svg')] bg-cover flex items-start pt-5 justify-center md:bg-[url('./assets/bg-sidebar-desktop.svg')] h-1/5 md:bg-cover md:w-1/5 md:h-5/6 md:flex-col md:justify-start md:pl-10 md:rounded-lg md:ml-10">
       {step.steps.map((el, index) => (
         <button
           key={index}

@@ -31,7 +31,7 @@ export default function Personalinfo() {
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:ml-52 md:w-1/2 md:bg-white md:mt-20">
       <div>
-        <div className="bg-white w-10/12 md:w-full rounded-md mx-auto py-5 px-3">
+        <div className="bg-white w-10/12 md:w-full rounded-lg mx-auto py-5 px-3 relative -top-20 md:top-0">
           <h1 className="text-2xl text-blue-800 font-bold md:text-4xl">
             Personal info
           </h1>

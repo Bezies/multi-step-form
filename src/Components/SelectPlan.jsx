@@ -44,15 +44,14 @@ export default function SelectPlan() {
     dispatch(previousStep({ actual: "step2", previous: "step1" }));
   }
 
-  // BUTTON NEXT PAGE : GESTION DU PRIX DU PLAN + GESTION ERREUR
+  // BUTTON NEXT PAGE : GESTION DU PRIX DU PLAN
   function handleNext() {
     dispatch(PriceOfPlan(NameOfPlan));
-    dispatch(PlanError());
   }
 
   return (
-    <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
-      <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3 md:flex md:flex-col md:justify-center md:w-1/2">
+    <div className="h-3/5 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
+      <div className="relative -top-20 bg-white w-10/12 rounded-lg mx-auto py-5 px-3 md:flex md:top-0 md:flex-col md:justify-center md:w-1/2">
         <h1 className="text-2xl text-blue-800 font-bold md:text-4xl">
           Select your plan
         </h1>
@@ -140,7 +139,7 @@ export default function SelectPlan() {
       </div>
 
       {/*PREVIOUS NEXT / BUTTON  */}
-      <div className="w-10/12 flex items-center justify-between mx-auto px-3 md:w-1/2">
+      <div className="mt-10 w-10/12 flex items-center justify-between mx-auto px-3 md:w-1/2">
         <button
           onClick={() => handlePrevious()}
           className="font-bold text-gray-400"
@@ -149,7 +148,7 @@ export default function SelectPlan() {
         </button>
         <button
           className="bg-blue-900 text-white rounded px-4 py-2"
-          onClick={() => handleNext({ name: NameOfPlan, value: PlanPrice })}
+          onClick={() => handleNext({ name: NameOfPlan })}
         >
           Next page
         </button>

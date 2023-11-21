@@ -52,7 +52,7 @@ export default function PickAddons() {
 
   return (
     <div className="h-1/2 bg-blue-100 md:h-full md:w-full md:bg-white md:mt-20">
-      <div className="bg-white w-10/12 rounded-md mx-auto py-5 px-3 md:flex md:flex-col md:justify-center md:w-1/2">
+      <div className="bg-white w-10/12 rounded-lg mx-auto py-5 px-3 md:flex md:flex-col md:justify-center md:w-1/2 relative -top-20 md:top-0">
         <h1 className="text-2xl text-blue-800 font-bold md:text-4xl">
           Pick add-ons
         </h1>
