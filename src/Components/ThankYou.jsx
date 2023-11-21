@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ThankYou() {
   return (
-    <div className="h-1/2 bg-blue-100 md:h-full md:bg-white md:flex md:items-center md:justify-center">
-      <div className="flex flex-col items-center justify-center bg-white w-10/12 rounded-md mx-auto py-10 px-3">
+    <div className="h-screen bg-blue-100 md:h-full md:bg-white md:flex md:items-center md:justify-center">
+      <div className="flex flex-col items-center justify-center bg-white w-10/12 rounded-md mx-auto py-10 px-3 relative -top-20 md:top-0">
         <img
           className="w-14 md:w-20"
           src="assets/images/icon-thank-you.svg"
